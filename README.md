@@ -29,3 +29,19 @@ page. Each template’s YAML mirrors the instructions provided in the SASJ
 `example.tex` file.
 
 ## Usage
+
+Once the package is installed, you can create a new .Rmd file using one
+of the templates. In RStudio, *File* \> *New File* \> *R Markdown…* will
+open a “New R Markdown” dialog box. Select “From Template”, choose one
+of the available `sasjtemplate` options, provide a name for your file
+and provide a directory to create the folder in.
+
+The resulting .Rmd file may be knitted immediately to produce a sample
+.pdf file. The first seven sections of the file are identical to the
+file produced from the SASJ .tex template. The eighth section provides
+further supporting information on using the R markdown version and
+functionality.
+
+Of course, for your purposes, you will need to edit the YAML
+(explanatory comments are provided) and contents of the .Rmd file in
+order to write your own paper.
