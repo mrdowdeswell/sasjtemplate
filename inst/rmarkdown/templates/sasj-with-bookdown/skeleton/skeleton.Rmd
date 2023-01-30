@@ -37,20 +37,11 @@ user_def_cmds:
 # Add your bibliography by specifying the name of the appropriate *.bib file.
 # You can create a bib file using software like JabRef (http://www.jabref.org/).
 bibliography: references.bib
-
-## Template YAML - LEAVE AS IS UNLESS YOU KNOW WHAT YOU'RE DOING
+lang: en-GB # As required in the author guidelines: "Please use British (UK-English) spelling and grammar consistently throughout your manuscript."
 output: 
   sasjtemplate::with_bookdown:
-#  pdf_document:
-#  bookdown::pdf_document2:
-#    template: SASJ-Rmd-Template.tex
-#    md_extensions: -autolink_bare_uris
-#    pandoc_args: --top-level-division=section
-#    toc: false
-#    citation_package: natbib
     keep_tex: true
 ed_manu_year: "`r format(Sys.time(), '%Y')`" # To set the correct manuscript date for editor
-lang: en-GB # As required in the author guidelines: "Please use British (UK-English) spelling and grammar consistently throughout your manuscript."
 ---
 
 ```{r setup, include = FALSE}
@@ -341,12 +332,7 @@ If you choose to optionally use the `bookdown::pdf_document2` output format, the
     :::
 
 ```{r show-theorem-if-bookdown-being-used, results = 'asis'}
-if (
-  "bookdown::pdf_document2" == rmarkdown::all_output_formats(knitr::current_input())   |
-  "bookdown::pdf_book" == rmarkdown::all_output_formats(knitr::current_input())
-  |
-  "sasjtemplate::with_bookdown" == rmarkdown::all_output_formats(knitr::current_input())
-  ) {
+if ("sasjtemplate::with_bookdown" == rmarkdown::all_output_formats(knitr::current_input())) {
 cat('::: {.theorem #thmlabel}', 'The advantage of this `bookdown` theorem environment syntax is that it may contain **any** _Markdown_ syntax^[Even footnotes!].', ':::', sep = '\n')
 }
 ```
