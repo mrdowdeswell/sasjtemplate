@@ -2,7 +2,6 @@
 #' 
 #' @param keep_tex Keep the raw .tex file?
 #'
-#' @import bookdown
 #' @export
 with_bookdown = function(keep_tex = TRUE) {
   # locations of resource files in the package
