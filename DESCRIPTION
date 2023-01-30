@@ -1,0 +1,12 @@
+Package: sasjtemplate
+Title: R Markdown Template for SASJ Paper
+Version: 0.0.0.9000
+Authors@R: 
+    person("Mark", "Dowdeswell", , "Mark.Dowdeswell@wits.ac.za", role = c("aut", "cre"),
+           comment = c(ORCID = "0000-0003-0200-653X"))
+Description: This package installs R markdown format templates for writing a paper 
+    in the style required by the South African Statistical Journal.
+License: GPL (>= 3)
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.1.2
