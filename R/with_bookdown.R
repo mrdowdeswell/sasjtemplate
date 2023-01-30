@@ -1,3 +1,4 @@
+#' @export
 with_bookdown = function(keep_tex = TRUE) {
   # locations of resource files in the package
   pkg_resource = function(...) {
