@@ -342,8 +342,10 @@ If you choose to optionally use the `bookdown::pdf_document2` output format, the
 
 ```{r show-theorem-if-bookdown-being-used, results = 'asis'}
 if (
-  "bookdown::pdf_document2" == rmarkdown::all_output_formats(knitr::current_input()) |
+  "bookdown::pdf_document2" == rmarkdown::all_output_formats(knitr::current_input())   |
   "bookdown::pdf_book" == rmarkdown::all_output_formats(knitr::current_input())
+  |
+  "sasjtemplate::with_bookdown" == rmarkdown::all_output_formats(knitr::current_input())
   ) {
 cat('::: {.theorem #thmlabel}', 'The advantage of this `bookdown` theorem environment syntax is that it may contain **any** _Markdown_ syntax^[Even footnotes!].', ':::', sep = '\n')
 }
