@@ -11,12 +11,21 @@ in the style required by the South African Statistical Journal.
 
 ## Installation
 
-You can install the development version of `sasjtemplate` from
+You can install the development version of
+[`sasjtemplate`](https://github.com/mrdowdeswell/sasjtemplate) from
 [GitHub](https://github.com/) with:
 
 ``` r
 # install.packages("devtools")
 devtools::install_github("mrdowdeswell/sasjtemplate")
 ```
+
+## Background
+
+The R markdown templates are derived from the `example.tex` file
+provided by the South African Statistical Journal (SASJ) on their
+[submissions](https://www.journals.ac.za/index.php/sasj/about/submissions)
+page. Each template’s YAML mirrors the instructions provided in the SASJ
+`example.tex` file.
 
 ## Usage

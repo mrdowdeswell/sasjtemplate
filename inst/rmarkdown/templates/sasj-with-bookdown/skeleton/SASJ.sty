@@ -1,0 +1,295 @@
+\RequirePackage{amsmath,amssymb,amsthm}
+\RequirePackage{graphicx}
+\RequirePackage{geometry}
+\RequirePackage{ifthen}
+\RequirePackage{bm}
+\RequirePackage[longnamesfirst]{natbib}
+\RequirePackage{changepage,titlesec,booktabs}
+\RequirePackage[labelsep=period]{caption}
+\RequirePackage{nextpage}
+\RequirePackage{fancyhdr}
+\RequirePackage{lastpage}
+\RequirePackage{url}
+\urlstyle{same}
+
+\RequirePackage[T1]{fontenc}
+\RequirePackage{mathptmx}
+
+\captionsetup[table]{skip=2pt}
+\captionsetup[figure]{skip=2pt}
+
+\geometry{twoside,
+ paperwidth=190mm,
+ paperheight=260mm,
+ textwidth=140mm,
+ textheight=200mm,
+ centering,
+ headheight=50pt,
+ headsep=10pt,
+ footskip=12pt,
+ footnotesep=24pt plus 2pt minus 12pt
+}
+
+\titleformat{\section}
+    {\normalfont\fontsize{11pt}{\baselineskip}\bfseries}
+    {\thesection.}{.8em}{}
+\titlespacing*\section{0pt}{14pt plus 1pt minus 1pt}{5pt plus 1pt minus 1pt}
+
+\titleformat{\subsection}
+    {\normalfont\normalsize\bfseries}
+    {\thesubsection}{.8em}{}
+\titlespacing*\subsection{0pt}{12pt plus 1pt minus 1pt}{3pt plus 1pt minus 1pt}
+
+\titleformat{\subsubsection}
+    {\normalfont\normalsize\itshape}
+    {\thesubsubsection}{.8em}{}
+\titlespacing*\subsubsection{0pt}{10pt plus 1pt minus 1pt}{2pt plus 1pt minus 1pt}
+ 
+%Realign the footnote and footnote mark.
+\makeatletter
+\renewcommand{\@makefntext}[1]{%
+  \parindent 1em%
+  \noindent\normalfont\raisebox{3pt}{\tiny\@thefnmark}{\kern -1pt}~#1
+}
+\makeatother
+
+%Redefine the footnote rule (introduces a line that spans 40% of the textwidth at the bottom of the page).
+\newcommand{\resetfootnoterule}{
+	\renewcommand{\footnoterule}{%
+  	\kern -3pt
+	\hrule width 0.4\textwidth height 0.5pt
+  	\kern 2pt
+	}
+}  
+
+\setlength{\parindent}{1em}
+\setlength{\parskip}{0em}
+\raggedbottom
+
+%Define the "forloop" : \forloop[step]{counter}{initial_value}{conditional}{code_block}
+\newcommand{\forloop}[5][1] {% 
+	\setcounter{#2}{#3}% 
+	\ifthenelse{#4} {% 
+		#5% 
+		\addtocounter{#2}{#1}% 
+		\forloop[#1]{#2}{\value{#2}}{#4}{#5}
+	}% 
+	{% Else do nothing
+	}% 
+}%
+
+%Macro for the printing of the optional e-mail address.
+\newcommand{\printemail}[1]{\ifthenelse{\equal{#1}{}}{}{\\e-mail: \it #1 \rm}}
+
+%Macro for the printing of the optional author comment.
+\newcommand{\printauthorcomment}[1]{\ifthenelse{\equal{#1}{}}{}{\large\footnote{#1}}}
+
+%Macro for the printing of the running title. (#1=sasjtitle, #2=sasjrunningtitle). 
+%I had to define this using "\DeclareRobustCommand" because it kept throwing errors in the "\markboth" statment when I tried it with "\newcommand"... I have no idea why it did this.
+\DeclareRobustCommand{\printrunningtitle}{\ifthenelse{\equal{\sasjrunningtitle}{}}{\MakeUppercase{\sasjtitle}}{\MakeUppercase{\sasjrunningtitle}}}
+
+%Set up the \Title. [required]
+\newcommand{\Title}[1]{ %
+	\newcommand{\sasjtitle}{#1} 
+}
+
+%Set up the \RunningTitle (if the original title is too long). [optional]
+%First set the running to title to blank by default
+\newcommand{\sasjrunningtitle}{}
+%The define the variable that will hold the macro.
+\newcommand{\RunningTitle}[1]{ %
+	\renewcommand{\sasjrunningtitle}{#1} 
+}
+
+%Set up the \AuthorRunningHead to display the correct forms of the names in the header. [required]
+\newcommand{\AuthorRunningHead}[1]{%
+	\newcommand{\sasjauthorrunninghead}{#1}
+}
+
+%Set up the \Author command so that multiple authors can be listed. [required]
+\newcounter{authcounter}
+\setcounter{authcounter}{1}
+\newcommand{\Author}[1]{ %
+	\expandafter\newcommand\csname sasjauthor\the\value{authcounter} \endcsname{#1} 
+	\expandafter\newcommand\csname sasjemail\the\value{authcounter} \endcsname{} 		%Define a blank e-mail (used for a logical test later).
+	\expandafter\newcommand\csname sasjauthorcom\the\value{authcounter} \endcsname{} 	%Define a blank author comment (used for a logical test later).
+	\stepcounter{authcounter}
+}
+
+%Set up the \AuthorComment command so that you can associate a footnote style comment with an author. [optional]
+\newcounter{aucomcounter}
+\setcounter{aucomcounter}{0}
+\newcommand{\AuthorComment}[1]{ %
+	\addtocounter{authcounter}{-1}
+	\expandafter\renewcommand\csname sasjauthorcom\the\value{authcounter} \endcsname{#1} 
+	\addtocounter{authcounter}{1}
+	\addtocounter{aucomcounter}{1}
+}
+
+%Set up the \Institute command so that each author is associated with an institution. [required]
+\newcounter{instcounter}
+\setcounter{instcounter}{1}
+\newcommand{\Institute}[1]{ 
+	\addtocounter{authcounter}{-1}
+	\expandafter\newcommand\csname sasjinstitute\the\value{authcounter} \endcsname{#1} 
+	\addtocounter{authcounter}{1}
+}
+
+%Set up the \Email command so that each author is associated with an email address. [optional]
+\newcounter{emailcounter}
+\setcounter{emailcounter}{1}
+\newcommand{\Email}[1]{ 
+	\addtocounter{authcounter}{-1}
+	\expandafter\renewcommand\csname sasjemail\the\value{authcounter} \endcsname{#1} 
+	\addtocounter{authcounter}{1}	
+}
+
+%Set up the \KeyWords list. [required]
+\newcommand{\KeyWords}[1]{ 
+	\newcommand{\sasjkeywords}{
+		\begin{adjustwidth}{5em}{5em}
+			\footnotesize\emph{Key words: }{#1}\par
+		\end{adjustwidth}
+	} 
+}
+
+%Set up the \Abstract. [required]
+\newcommand{\Abstract}[1]{ 
+	\newcommand{\sasjabstract}{
+		\begin{adjustwidth}{5em}{5em}
+			\hspace{\parindent}
+			\footnotesize{#1}\par
+		\end{adjustwidth}
+	} 
+}
+
+%Set up the \AMS list. [required]
+\newcommand{\AMS}[1]{ 
+	\newcommand{\sasjams}{\noindent\footnotesize \it MSC2010 subject classifications. \rm \MakeUppercase{#1}.} 
+}
+
+%Set up the volume number, issue number, and pages.
+\newcommand{\thisyear}{\the\year}
+\newcommand{\thisvolume}{XX}
+\newcommand{\thisissue}{X}
+\newcommand{\sasjjournalvolandno}{Vol.\ \thisvolume, No.\ \thisissue, \thepage--\pageref{LastPage}}
+
+%Set up the Journal name, volume number, and pages.
+\newcommand{\ManuRecRevAcc}[3]{ 
+	\newcommand{\sasjmanurecrevacc}{\footnotesize Manuscript received #1, revised #2, accepted #3.} 
+}
+
+\fancypagestyle{firstpage}{
+	\fancyhf{} % sets both header and footer to nothing
+	\renewcommand{\headrulewidth}{0pt} % removes the horizontal line in the header
+  \fancyhead[L]{\scriptsize\emph{Submitted to the South African Statistical Journal,} \sasjjournalvolandno \\ \textcopyright \ \thisyear \ South African Statistical Association}
+  \fancyhead[R]{\thepage}
+}
+
+\fancypagestyle{restofpages}{
+	\fancyhf{} % sets both header and footer to nothing
+	\renewcommand{\headrulewidth}{0pt} % removes the horizontal line in the header
+  \fancyhead[CE]{\scriptsize\MakeUppercase{\sasjauthorrunninghead}}
+  \fancyhead[CO]{\scriptsize\MakeUppercase{\printrunningtitle}}
+  \fancyhead[LE,RO]{\thepage}
+}
+
+\newcommand{\hideheaders}{}
+\ifthenelse{\equal{\hideheaders}{1}}{\pagestyle{empty}}{\pagestyle{restofpages}}
+
+%Print all the elements that make up the title.
+\newcommand{\MakeTitle}{
+	%=====================Title======================================================================
+	\begin{center}
+		\renewcommand{\baselinestretch}{1.5}\normalsize
+		\rule{0pt}{18mm}\bf\Large\MakeUppercase{\sasjtitle}\normalsize
+	\end{center}
+	\renewcommand{\baselinestretch}{1}\normalsize	
+	%=====================Check if at least one author comment appears. If yes, use the footnote rule. Otherwise remove it.===============
+	%\ifnum\value{aucomcounter}>0 %
+		%Use the footnote rule.
+		\resetfootnoterule
+	%\else
+		%Remove the footnote rule.
+	%	\renewcommand\footnoterule{} 		
+	%\fi
+	%=====================Loop over and print all the authors, institutes, and e-mails===============
+	\smallskip
+	\newcounter{qq}
+	\setcounter{qq}{1}
+	\forloop{qq}{1}{\value{qq} < \value{authcounter}} {%
+		\begin{center}
+			\large \textbf{ \emph{\expandafter\csname sasjauthor\the\value{qq} \endcsname }}\normalsize%Print the author's name.
+			\noindent\normalsize\rm\expandafter\printauthorcomment \csname sasjauthorcom\the\value{qq} \endcsname  %Print the author comment.
+			\linebreak	
+			\noindent\rm \normalsize \csname sasjinstitute\the\value{qq} \endcsname %Print the institute's name and address.
+			\noindent\normalsize \rm \expandafter\printemail \csname sasjemail\the\value{qq} \endcsname  %Print the email address.
+		\end{center}	
+	}%End "forloop" 
+	%=====================Abstract====================================================================
+	\smallskip\sasjabstract
+	%=====================Keywords===================================================================
+	\smallskip\sasjkeywords
+	%=====================AMS codes in footer========================================================
+	\let\thefootnote\relax %Remove the footnote number.
+	\footnotetext{\normalsize \sasjams} %Insert the footer.
+	\gdef\thefootnote{\arabic{footnote}} %Restore the number to footnotes.
+	
+	\ifthenelse{\equal{\hideheaders}{1}}{\pagestyle{empty}}{\thispagestyle{firstpage}}
+	
+	%Change the line spacing to 1.1 line spacing.
+	\renewcommand{\baselinestretch}{1.1}\normalsize
+	
+	%\vspace{-20pt}
+	
+}
+
+\newcommand{\ReceiptDates}{
+	%=====================Manuscript receipt dates in footer========================================================
+	\let\thefootnote\relax %Remove the footnote number.
+	\renewcommand\footnoterule{} %Remove the footnote rule.
+	\footnotetext{\normalsize \sasjmanurecrevacc} %Insert the footer.
+	\gdef\thefootnote{\arabic{footnote}} %Restore the number to footnotes.
+}	
+
+%Define the new style for the theorems (identical to the "plain" style except that the text is in roman font, not italic).
+\newtheoremstyle{sasjstyle}
+  {\topsep}   % ABOVESPACE
+  {\topsep}   % BELOWSPACE
+  {\it}       % BODYFONT
+  {0pt}       % INDENT (empty value is the same as 0pt)
+  {\bfseries} % HEADFONT
+  {.}          % HEADPUNCT
+  {5pt plus 1pt minus 1pt} % HEADSPACE
+  {}          % CUSTOM-HEAD-SPEC
+\theoremstyle{sasjstyle}
+
+%Define all the new theorems.
+\newtheorem{theorem}{Theorem}
+\newtheorem{corollary}{\noindent\textbf{Corollary}}
+\newtheorem{lemma}{\noindent\textbf{Lemma}}
+\newtheorem{proposition}{\noindent\textbf{Proposition}}
+\renewcommand{\qedsymbol}{$\blacksquare$}
+
+\newtheoremstyle{sasjstyledef}
+  {\topsep}   % ABOVESPACE
+  {\topsep}   % BELOWSPACE
+  {\rm}       % BODYFONT
+  {0pt}       % INDENT (empty value is the same as 0pt)
+  {\bfseries} % HEADFONT
+  {.}          % HEADPUNCT
+  {5pt plus 1pt minus 1pt} % HEADSPACE
+  {}          % CUSTOM-HEAD-SPEC
+\theoremstyle{sasjstyledef}
+\newtheorem{definition}{\noindent\textbf{Definition}}
+\newtheorem{remark}{\noindent\textbf{Remark}}
+
+%Redefine the way in which table and figure numbers are presented.
+\makeatletter
+\renewcommand{\fnum@table}{\textbf{\tablename~\thetable}}
+\renewcommand{\fnum@figure}{\textbf{\figurename~\thefigure}}
+\makeatother
+
+\bibliographystyle{sasj}
+\setlength{\bibsep}{2pt}
+\renewcommand\harvardurl[1]{URL: {\itshape\url{#1}}}

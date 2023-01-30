@@ -1,0 +1,4 @@
+name: SASJ (using bookdown)
+description: >
+   SASJ article to be knitted using bookdown.
+create_dir: FALSE

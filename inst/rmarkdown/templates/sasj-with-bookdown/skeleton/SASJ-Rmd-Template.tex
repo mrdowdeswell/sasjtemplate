@@ -1,0 +1,102 @@
+\documentclass[twoside,10pt,hidelinks]{article}
+\usepackage{SASJ}
+
+% \def\hideheaders{1} % Do not modify this line.
+
+% The following packages are required for the SASJ package to work and are therefore loaded automatically:
+% amsmath, amssymb, amsthm, graphicx, geometry, ifthen, natbib,
+% changepage, titlesec, booktabs, caption, nextpage, fancyhdr
+$-- This .tex template for .Rmd use set up by Mark Dowdeswell (see associated .Rmd file)
+
+% Specify any additional packages you might need here.
+$-- Cycle through the user-required additional LaTeX packages
+$if(user_req_pkgs)$
+$for(user_req_pkgs)$
+$user_req_pkgs$
+$endfor$
+$endif$
+% LaTeX packages necessary for an Rmd file to knit without errors
+\usepackage{hyperref}               % Not part of the SASJ template; needed for hypertarget
+\hypersetup{bookmarksnumbered=true} % Not part of the SASJ template; adds number to bookmarks
+\providecommand{\tightlist}{%       % For markdown lists to render
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+%\graphicspath{{../}}
+
+% Declare any other user-defined commands or operators here:
+$-- Cycle through the user-defined LaTeX commands
+$if(user_def_cmds)$
+$for(user_def_cmds)$
+$user_def_cmds$
+$endfor$
+$endif$
+
+%============%
+% TITLE PAGE %
+%============%
+\Title{$title$}
+\RunningTitle{$running_title$}
+\AuthorRunningHead{$author_running_head$}
+
+$-- Cycle through the available authors and their metadata: author, institute, authorcomment, email
+$if(authors)$
+$for(authors)$
+% Author
+\Author{$authors.author$}
+$if(authors.institute)$
+\Institute{$authors.institute$}
+$endif$
+$if(authors.authorcomment)$
+\AuthorComment{$authors.authorcomment$}
+$endif$
+$if(authors.email)$
+\Email{$authors.email$}
+$endif$
+$sep$
+$-- Leave blank line below to separate authors in .tex file
+
+$endfor$
+$endif$
+
+$-- Cycle through the list of keywords to generate the keyword list, appropriately separated.
+$-- Presently this does not insert ",\ " between keywords though :-(
+$-- %\KeyWords{Keyword A,\ Keyword B,\ Keyword C}
+\KeyWords{${ for(keywords) }${ keywords }${ sep },\ ${ endfor }.}
+
+\Abstract{$abstract$}
+
+$-- Cycle through the list of AMS codes
+\AMS{${ for(ams) }${ ams }${ sep }, ${ endfor }}
+
+$-- This inserts the Shaded environment (for rendering R code chunks) only if R chunks are present
+$if(highlighting-macros)$
+$highlighting-macros$
+$endif$
+
+%xxxxxxxxxxxxxTO BE COMPLETED BY THE EDITORxxxxxxxxxxxxxxxxxx
+\ManuRecRevAcc{$ed_manu_year$-xx-xx}{$ed_manu_year$-xx-xx}{$ed_manu_year$-xx-xx}
+%xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+\begin{document}
+\MakeTitle
+
+%================================================================================
+% THE CONTENT OF THE PART STARTS HERE.-------------------------------------------
+%================================================================================
+
+$body$
+
+$-- %\bibliography{references}
+$if(bibliography)$
+$if(biblio-title)$
+$if(has-chapters)$
+\renewcommand\bibname{$biblio-title$}
+$else$
+\renewcommand\refname{$biblio-title$}
+$endif$
+$endif$
+\bibliography{$for(bibliography)$$bibliography$$sep$,$endfor$}
+$endif$
+
+\ReceiptDates % Do not remove this line.
+
+\end{document}

@@ -1,0 +1,407 @@
+---
+# Title of your paper:
+title: >-
+  Some useful guidelines for preparing a\ manuscript in the style of the South\ African\ Statistical\ Journal
+# Usually full titles are too long to display in page headers and are usually substituted for a shorter version, called a "running title". These appear on alternate headers in the pdf output.
+# Please specify a running title for your paper.
+running_title: >-
+  Guidelines for preparing a manuscript in the style of SASJ
+# Also for the page headers, list the surnames of all authors here, separated by commas and an ampersand (&) before the last author.
+author_running_head: 'Jones, Smith & Van Dalen'
+# Supply the name and institute of each author (both fields are required), and optionally also a comment and contact e-mail. Additional authors may be added in a similar way.
+authors:
+- author: 'John F. Jones'
+  institute: 'Department of Statistics, ABC University, Johannesburg, South Africa'
+- author: 'Gregory R. L. Smith'
+  institute: 'Department of Mathematics, XYZ University, Frankfurt, Germany'
+  authorcomment: 'Corresponding author.'  # Some comment to associate with Author 2 [OPTIONAL]
+  email: 'greg.smith@xyzmail.edu'         # E-mail Address of author 2 [OPTIONAL]
+- author: 'Karel van Dalen'
+  institute: 'Department of Statistics, UVW University, Cape Town, South Africa'
+  authorcomment: 'On sabbatical from the University of AAA, Stockholm, Sweden.'
+# Provide key words for the article. Words should be in alphabetical order, each beginning with a capital letter. For example:
+keywords: Keyword A, Keyword B, Keyword C
+# The aim of the abstract is to provide a concise description of your article. It should preferably be no more than 300 words and contain a minimum of symbols and references.
+abstract: |
+  A brief summary of your research article goes here. This block of text typically contains the research focus, the research methods used, the results/findings of the research, and the main conclusions and recommendations.
+# Provide the 2010 Mathematics Subject Classification codes applicable to the article. A database of AMS codes can be found here: http://www.ams.org/msc/pdfs/classification2010.pdf
+# Statistical topics usually have the prefix "62". For example, if the field of study covered in the article is "Hypothesis testing" in the category "Parametric Inference", then the AMS code is 62F03.
+ams: 62Gxx, 62Gxx, 62Gxx
+# Specify any additional user-required LaTeX packages you might need here (this parallels header-includes in regular RMD documents). Note use of '...'. Have left the \usepackage{...} as part of the string so that options may be easily passed, if necessary.
+user_req_pkgs:
+- '\usepackage{kantlipsum}' # This is an example; may be removed
+# Declare any other user-defined LaTeX commands or operators here. Note use of '...'
+user_def_cmds:
+- '\DeclareMathOperator{\Var}{Var}'
+- '\DeclareMathOperator{\Expec}{E}'
+# Add your bibliography by specifying the name of the appropriate *.bib file.
+# You can create a bib file using software like JabRef (http://www.jabref.org/).
+bibliography: references.bib
+
+## Template YAML - LEAVE AS IS UNLESS YOU KNOW WHAT YOU'RE DOING
+output: 
+  sasjtemplate::with_bookdown:
+#  pdf_document:
+#  bookdown::pdf_document2:
+#    template: SASJ-Rmd-Template.tex
+#    md_extensions: -autolink_bare_uris
+#    pandoc_args: --top-level-division=section
+#    toc: false
+#    citation_package: natbib
+    keep_tex: true
+ed_manu_year: "`r format(Sys.time(), '%Y')`" # To set the correct manuscript date for editor
+lang: en-GB # As required in the author guidelines: "Please use British (UK-English) spelling and grammar consistently throughout your manuscript."
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  echo = FALSE,        # The SASJ template (presently) does not provide for R code, hence 'echo = FALSE'
+  fig.pos = "tb",      # Ensure figures are top/bottom of pages, SASJ style
+  out.extra = "",      # Ensure figures are top/bottom of pages, SASJ style
+  fig.align = 'center' # Center align all figures
+  )
+options(bookdown.theorem.preamble = FALSE) # To prevent bookdown, if it is used, injecting duplicate amsthm
+```
+
+# Introduction {#sec:intro}
+
+Usually the introduction is typed in this section.
+
+# Typesetting and referencing mathematical expressions {#sec:math}
+
+The mass function for a Poisson distributed random variable \(X\) is denoted by \(p(x)\) and is defined as
+\begin{equation}\label{eqn:Poisson1}
+	p(x) =
+	\begin{cases}
+		{e^{-\lambda} \lambda^x}/{x!}		& \text{for } x=0,1,2,\dots \\
+		0 															& \text{otherwise}.
+	\end{cases}
+\end{equation}
+
+Notice how the equation is labelled and referenced. Below we have an example of an equation that does not have an equation number (only add equation numbers for those equations that are referenced in the text):
+\[
+	f(y) =  
+		\begin{cases}
+			\frac{1}{y^2}e^y & \mbox{ if } y < 0, \\ 
+			\log(y)          & \mbox{ if } y \geq 0, \\ 
+			0                & \mbox{ otherwise.}  
+		\end{cases}
+\]
+
+Here is another maths example:
+\begin{align*}
+	g(x) &= (2x^2-x^2)^{\frac{1}{2}}\\
+	     &= (x^2)^{\frac{1}{2}}\\
+	     &= x, \quad \mbox{ if } x > 0.
+\end{align*}
+
+If you want to type bold math roman letters and arabic numbers like $\mathbf{x}$, $\mathbf{a}$, $\mathbf{1}$, or $\mathbf{0}$ then use 
+	the command \verb!\mathbf!. However, if you want to type bold math greek letters like $\bm{\beta}$, $\bm{\Delta}$, or $\bm{\tau}$ then
+	use the command \verb!\bm!.
+
+Some basic text is outlined in Section \ref{sec:intro}. You may also reference Subsection \ref{subsec:1} and Subsubsection \ref{subsubsec:1}.
+
+# Itemized and enumerated lists {#sec:list}
+
+Here is an example of a nested enumerated list.
+\begin{enumerate}
+	\item Level 1
+	\begin{enumerate}
+		\item Level 2
+		\begin{enumerate}
+			\item Level 3
+			\begin{enumerate}
+				\item Level 4
+			\end{enumerate}
+		\end{enumerate}
+	\end{enumerate}			
+\end{enumerate}
+
+Here is an example of a nested itemized list.
+\begin{itemize}
+	\item Level 1
+	\begin{itemize}
+		\item Level 2
+		\begin{itemize}
+			\item Level 3
+			\begin{itemize}
+				\item Level 4
+			\end{itemize}
+		\end{itemize}
+	\end{itemize}			
+\end{itemize}
+
+# Theorems, propositions, etc. {#sec:thms}
+
+Consider Theorem \ref{thm:1} and Proposition \ref{pro:1} below. Note how these are labelled and referenced.
+
+\begin{theorem}
+	\label{thm:1}
+	My theorem.
+\end{theorem}
+
+\begin{proof}
+	My proof.
+\end{proof}
+
+\begin{proposition}
+	\label{pro:1}
+	My proposition.
+\end{proposition}
+
+\begin{corollary}
+	\label{cor:1}
+	My corollary.
+\end{corollary}
+
+\begin{lemma}
+	\label{lem:1}
+	My lemma.
+\end{lemma}
+
+\begin{definition}
+	\label{def:1}
+	My definition.
+\end{definition}
+
+\begin{remark}
+	\label{rem:1}
+	My remark.
+\end{remark}
+
+# Tables and figures {#sec:tbls}
+
+Table\ \ref{tab:results} shows an example of a table containing simulation results.
+Note that \emph{table captions should go above the tables}. In Figure\ \ref{fig:figure-random-numbers} we can see a graph where uniform random numbers are plotted against the sequence 1 to 30. Note that \emph{captions for figures should go below the figures}.
+Furthermore, note that a table or figure always appears either at the top or bottom of a page, regardless of where the table is placed in the text. This behaviour is correct.
+	
+\begin{table}[tb]
+	\caption{Results for the $\chi_5^2$ distribution.}\label{tab:results}
+	\centering
+	\begin{tabular}{llccccccccccc}
+		\toprule
+		& \multicolumn{3}{c}{$n=50$}
+			& \multicolumn{3}{c}{$n=100$}
+			& \multicolumn{3}{c}{$n=200$} \\ \cmidrule(lr){2-4} \cmidrule(lr){5-7} \cmidrule(lr){8-10}
+		\textbf{Type} & $\ell$ & \textbf{NC} & \textbf{EUB} & $\ell$ & \textbf{NC} & \textbf{EUB} & $\ell$ & \textbf{NC} & \textbf{EUB} \\
+		\midrule
+		$\hat{I}_H^N$
+				&	20 & 0.088 & 1.748 & 40 & 0.073 & 1.644 &  80 & 0.065 & 1.563 \\
+				&	25 & 0.096 & 1.706 & 50 & 0.078 & 1.612 & 100 & 0.068 & 1.540 \\
+				&	30 & 0.105 & 1.671 & 60 & 0.085 & 1.588 & 120 & 0.072 & 1.522 \\
+		\midrule
+		$\hat{I}_B^N$
+				& 20 & 0.063 & 1.828 & 40 & 0.052 & 1.695 &  80 & 0.048 & 1.594 \\
+				& 25 & 0.075 & 1.764 & 50 & 0.060 & 1.650 & 100 & 0.053 & 1.563 \\
+				& 30 & 0.087 & 1.715 & 60 & 0.069 & 1.617 & 120 & 0.059 & 1.540 \\
+		\midrule
+		$\hat{J}_H^N$
+				&	20 & 0.074 & 2.070 & 40 & 0.062 & 1.830 &  80 & 0.057 & 1.666 \\
+				&	25 & 0.078 & 1.937 & 50 & 0.066 & 1.748 & 100 & 0.060 & 1.616 \\
+				&	30 & 0.083 & 1.848 & 60 & 0.069 & 1.693 & 120 & 0.062 & 1.582 \\
+		\bottomrule
+	\end{tabular}
+\end{table}
+
+```{r figure-random-numbers, fig.cap = 'Plot of random numbers.', out.width = '0.7\\textwidth', dev = c('pdf', 'postscript')}
+# To include a figure from a file in .eps format your computer will need to have epstopdf and ghostscript to be installed (the same requirement to have LaTeX itself include .eps files)
+#knitr::include_graphics('graphs.eps') # Needs epstopdf & ghostscript to be installed
+# Create a plot from scratch in R
+df <- rbind.data.frame(
+  data.frame(x = 1:30, y = runif(30), id = 'Series 1'),
+  data.frame(x = 1:30, y = runif(30, min = 1, max = 3), id = 'Series 2')
+)
+# Plot using base R
+plot(df$x, df$y, col = c('#F8766D', '#00BFC4')[factor(df$id)], type = 'p', pch = 16, xlab = 'x-axis label', ylab = 'y-axis label')
+lines(df$x[df$id=='Series 1'], df$y[df$id=='Series 1'], col = '#F8766D', lty = 1)
+lines(df$x[df$id=='Series 2'], df$y[df$id=='Series 2'], col = '#00BFC4', lty = 1)
+# Plot using ggplot2
+#g <- df |> (\(.) {ggplot2::ggplot(., ggplot2::aes(x, y, colour = id))})()
+#g + ggplot2::geom_point() + ggplot2::geom_path() + 
+#  ggplot2::theme_bw() + ggplot2::labs(x = 'x-axis label', y = 'y-axis label') +
+#  ggplot2::guides(colour = ggplot2::guide_legend(title = NULL))
+# Remember that time consuming plot chunks can also be cached using the chunk option 'cache = TRUE'
+# The 'dev = c('pdf', 'postscript')' chunk option used above exports the graphics to both pdf and eps format, depending on what the publisher requires.
+```
+
+# Sections and subsections {#sec:6}
+
+The sections of the text can also be referenced. See, for example, the code used to label Section\ \ref{sec:tbls} concerning tables and figures, or Section\ \ref{sec:citing} concerning references.
+
+## Subsection title goes here {#subsec:1}
+
+Subsection text.
+
+### Subsubsection title goes here {#subsubsec:1}
+
+Subsubsection text.
+
+# Citing references {#sec:citing}
+
+Firstly you need to create a bibliography file (references.bib in this example) containing the details of all works cited in your manuscript. This can be easily done using reference management software such as JabRef (freely available for download from \url{http://www.jabref.org/}).
+Once your bibliography file has been prepared and linked (see the necessary \LaTeX\ code near the end of the TeX file), it is easy to cite works in the text. A list of references containing only the works cited in the text will then be generated automatically and printed at the end of the article.
+    
+There are several citing styles. When a reference does not form part of the main sentence and needs to be referred to in parentheses as \citep{hall1988}, you can use the code \verb!\citep{hall1988}!. Using \verb!\citet{hall1988}! instead, results in \citet{hall1988}, i.e.\ only the author is printed along with the publication year in parentheses. Other commonly-used styles for citing are shown in Table\ \ref{tab:citing}.
+
+\begin{table}
+	\centering\footnotesize
+	\caption{abc.}\label{tab:citing}
+	\begin{tabular}{lll}
+		\toprule
+		\textbf{Syntax} & \textbf{Code example} & \textbf{Result in text} \\
+		\midrule
+		\verb!\citep{}!		& \verb!\citep{fisher1939}! & \citep{fisher1939} \\
+											& \verb!\citep{fisher1939,hall1988}! & \citep{fisher1939,hall1988} \\
+											& \verb!\citep[p.~931]{hall1988}! & \citep[p.~931]{hall1988} \\
+											& \verb!\citep[see, for example,][]{fisher1939}! & \citep[see, for example,][]{fisher1939} \\
+											& \verb!\citep[see][p.~931]{hall1988}! & \citep[see][p.~931]{hall1988} \\
+		\verb!\citet{}!		& \verb!\citet{fisher1939}! & \citet{fisher1939} \\
+											& \verb!\citet{fisher1939,hall1988}! & \citet{fisher1939,hall1988} \\
+											& \verb!\citet[p.~13]{fisher1939}! & \citet[p.~13]{fisher1939} \\
+		\verb!\citealp{}!	& \verb!\citealp[see, for example,][]{fisher1939}! & \citealp[see, for example,][]{fisher1939} \\
+		\bottomrule
+	\end{tabular}
+\end{table}
+
+# Using the `Rmd for SASJ.Rmd` template {#sec:rmarkdowntemplate}
+
+Sections \ref{sec:intro}--\ref{sec:citing} are precisely the sections^[Except for Figure \ref{fig:figure-random-numbers}, which was produced in R. To include a .eps file into a \LaTeX\ document (such as `graphs.eps` as in the SASJ template on the journal's website), you likely need Ghostscript installed, which can't be counted on being the case on all systems. Of course, if you _do have_ Ghostscript (and the `epstopdf` \LaTeX\ library) installed, then using `knitr::include_graphics('graphs.eps')` in an R code chunk will work.] produced by using a \LaTeX\ compiler to compile the SASJ's `example.tex` file [@SASJtextemplate]. This section covers some further details of using the `.Rmd` template to produce a `.tex` file equivalent to `example.tex` (and implicitly an associated `.pdf` file). 
+
+If you have read through the `Rmd for SASJ.Rmd` file, you will have noticed that it contains primarily plain \LaTeX\ in Sections\ \ref{sec:intro}--\ref{sec:citing} (the `.Rmd` format permits this, thanks to Pandoc). Of course, one of the advantages of using R markdown is the ability to intermingle writing with analysis, results, output and graphics---all in a dynamic way. While writing raw \LaTeX\ may occasionally be unavoidable in order to achieve certain aims, much of what is achieved by the raw \LaTeX\ in Sections\ \ref{sec:intro}--\ref{sec:citing} is also achievable via regular (perhaps easier) R markdown syntax. For example, all the section headings are already implemented using R markdown syntax.
+
+We proceed to recast some of the earlier \LaTeX-produced sections using R markdown syntax. In principle, it is possible to write a complete SASJ-submission-ready document entirely within R markdown (using this template) without ever touching a \LaTeX\ compiler directly^[Of course, behind the `rmarkdown` and `knitr` scenes, Pandoc is calling a \LaTeX\ compiler on your behalf. To this end, it is recommended that you install the `tinytex` R package, a lightweight \LaTeX\ distribution.]. 
+
+## Template file structure {#subsec:filestructure}
+
+Before starting with the details of the template files themselves, you should be aware that your `.Rmd` file (well, Pandoc, really) will need to be able to locate four files used in the creation of the SASJ article: `SASJ_Rmd_Template.tex`, `SASJ.sty`, `sasj.bst`, `references.bib`. The first of these is the Pandoc template that is used to render the article. The last three files are the original files provided as part of the SASJ TeX template [see, for example, @SASJtextemplate]. Of the four, the only one you would need to edit or replace is `references.bib` (with your own references relevant to your article).
+
+If your `.Rmd` document (your edited version of a copy of the `Rmd for SASJ.Rmd` template) is in the same folder as these files, then you should have no problem compiling to `.pdf` (you should try it). (You should rename the `Rmd for SASJ.Rmd` file before using it---for example, `Inference article for SASJ.Rmd`.)
+
+Alternatively, it is possible to install the R markdown template for SASJ into your version of R Studio so that it is one of the available templates when clicking through the menu items `File > New File > R Markdown...`, and then navigate to `From Template` in the left pane.
+
+## YAML frontmatter
+
+The `Rmd for SASJ.Rmd` template file has extensive top-level YAML for providing various SASJ article elements. The YAML frontmatter includes comments (primarily the same comments that appear in the `example.tex` file on the journal's website) to provide guidance on these elements, supplemented with comments from the journal's author guidelines [@SASJauthorguidelines].
+
+Be aware of the initial (two space) indentation of certain elements in the YAML frontmatter (`title`, `running_title`, and `abstract`, in particular). In fact, be aware of spacing and newlines when writing R markdown documents in general. Many markdown typesetting problems are often resolved by judicious use of spacing (either actual spaces, or newlines) in the `.Rmd` source file.
+
+## The top-level `output` format used in the `.Rmd` file
+
+The default `output` format in the YAML frontmatter of this template is `pdf_document`.
+
+```
+output:
+  pdf_document:
+```
+
+Alternatively, for users familiar with the `bookdown` package^[Even if you are not familiar with it, it is easy to install via `install.packages("bookdown")` in R.] [@yihui2016], it is also possible to use `bookdown::pdf_document2` as the `output` format.
+
+```
+output:
+  bookdown::pdf_document2:
+```
+
+Which `output` format to use is not a huge decision. It is largely a matter of familiarity. The `bookdown` package allows some finer control over certain features, as indicated in subsequent sections.
+
+## Typesetting and referencing mathematical expressions {#subsec:mathexpress}
+
+Mathematical expressions may be entered exactly as described in Section \ref{sec:math}. Numbered, labelled equations may be referenced using (`\ref{eqn:Poisson1}`). So, for example: "the probability mass function of a Poisson variable is provided in (\ref{eqn:Poisson1})". Note that the SASJ guidelines indicate that "it is preferable not to use the word 'Equation' with the equation number when referencing" [@SASJauthorguidelines].
+
+If you choose to use `bookdown::pdf_document2` as your `output` format, then you may alternatively reference equations (and sections, subsections, tables, figures, etc.)\ using the syntax `\@ref(eqn:Poisson1)` instead of (`\ref{eqn:Poisson1}`), the latter being essentially raw \LaTeX. As mentioned before, this is a matter of preference.
+
+## Enumerated and itemised lists
+
+Here is an example of a nested enumerated list in R markdown.
+
+1. Level 1
+    (a) Level 2
+        i. Level 3
+            A.  Level 4 (note that two spaces are required after the . if a capital Roman letter is used)
+
+Here is an example of a nested itemised list in R markdown.
+
+* Level 1
+    - Level 2
+        + Level 3
+            * Level 4
+
+## Theorems, propositions, etc. {#subsec:thmsprops}
+
+### Using vanilla `pdf_document` output format
+
+If you use the `pdf_document` output format, then you may write your theorems, propositions, etc.\ as in Section \ref{sec:thms} (using regular \LaTeX), and use the referencing syntax described in Subsection \ref{subsec:mathexpress}.
+
+### Using the `bookdown` package and `bookdown::pdf_document2` output format
+
+If you choose to optionally use the `bookdown::pdf_document2` output format, then it is also possible to use the following markdown syntax to provide a theorem (and a label for it, `#thmlabel`, to use for referencing).
+
+    ::: {.theorem #thmlabel}
+    The advantage of this `bookdown` theorem environment syntax is that it may contain 
+    **any** _Markdown_ syntax^[Even footnotes!].
+    :::
+
+```{r show-theorem-if-bookdown-being-used, results = 'asis'}
+if (
+  "bookdown::pdf_document2" == rmarkdown::all_output_formats(knitr::current_input()) |
+  "bookdown::pdf_book" == rmarkdown::all_output_formats(knitr::current_input())
+  ) {
+cat('::: {.theorem #thmlabel}', 'The advantage of this `bookdown` theorem environment syntax is that it may contain **any** _Markdown_ syntax^[Even footnotes!].', ':::', sep = '\n')
+}
+```
+
+This generates a theorem environment which may be referenced using `\@ref(thm:thmlabel)`. Similar syntax may be used to create labelled and referenceable proof (`.proof`), proposition (`.proposition`), corollary (`.corollary`), lemma (`.lemma`), definition (`.definition`), and remark (`.remark`) environments. See @yihui2016 (and [markdown extensions by `bookdown`](https://bookdown.org/yihui/bookdown/markdown-extensions-by-bookdown.html#theorems), in particular) for further details.
+
+## Tables and figures
+
+
+
+## Section headings and references {#subsec:secheadrefs}
+
+
+
+## Citing references {#subsec:citing}
+
+You still need to create a bibliography file (`references.bib` in this example) containing the details of all works cited in your manuscript. The `SASJ.sty` \LaTeX\ stylesheet uses `natbib` to manage citation references.
+
+Once your bibliography file has been prepared and linked (by providing the name of the `.bib` file in the top-level YAML frontmatter of this `.Rmd` file, e.g.\ `bibliography: references.bib`), it is easy to cite works in the text.
+
+When a reference does not form part of the main sentence and needs to be referred to in parentheses as [@hall1988], you can use `[@hall1988]`. Using `@hall1988` instead, results in @hall1988, i.e.\ only the author is printed along with the publication year in parentheses. For citing references, Table \ref{tab:Rmdciting} provides the equivalent R markdown syntax^[Note that Table \ref{tab:Rmdciting} was produced using an R `data.frame` and a vanilla `knitr::kable()` command (see the `Rmd for SASJ.Rmd` template for the implementation). There are also additional R packages for further manipulation and styling  of publication-quality tables (see, for example, the `kableExtra` package).] of the \LaTeX\ commands in Table \ref{tab:citing}.
+
+The [SASJ guidelines for authors](https://www.journals.ac.za/index.php/sasj/libraryFiles/downloadPublic/135) provide some further examples of references, which have been incorporated into the `references.bib` file for this template. See @abramstegun for a book reference. For articles in journals, see @bck1992 or @gburtrumbo1995. For a proceedings article, see @wolfinger1999, and for a chapter in a book, see @ben1994.
+
+```{r equiv-Rmd-citing}
+cite.table <- data.frame(
+  syntax = c('\\verb![@...]!', '', '', '', '', '\\verb!@...!', '', ''),
+  rmd = c('\\verb![@fisher1939]!', '\\verb![@fisher1939; @hall1988]!', '\\verb![@hall1988, p.\ 931]!', '\\verb![see, for example, @fisher1939]!', '\\verb![see, @hall1988, p.\ 931]!', '\\verb!@fisher1939!', '\\verb!@fisher1939; @hall1988!', '\\verb!@fisher1939 [p.\ 13]!'),
+  result = c('\\citep{fisher1939}', '\\citep{fisher1939,hall1988}', '\\citep[p.~931]{hall1988}', '\\citep[see, for example,][]{fisher1939}', '\\citep[see][p.~931]{hall1988}', '\\citet{fisher1939}', '\\citet{fisher1939,hall1988}', '\\citet[p.~13]{fisher1939}'))
+```
+
+```{r Rmdciting}
+knitr::kable(cite.table, 
+  format = 'latex', 
+  toprule = '\\toprule',
+  midrule = '\\midrule',
+  bottomrule = '\\bottomrule',
+  position = 'tb',
+  align = 'cll',
+  col.names = c('Syntax', 'R markdown example', 'Result in text'),
+  caption = 'Using R markdown for citing references.',
+  linesep = '',
+  vline = '',
+  escape = FALSE
+  )
+```
+
+## Adding appendices
+
+The SASJ guidelines don't address appendices at all. If, however, you wish to try your luck, you will _have_ to use `bookdown::pdf_document2` as the `output` format for the `.Rmd` file. Then, add appendices using:
+
+```
+# (APPENDIX) Appendix {-}
+
+# Source code {#app:sourcecode}
+
+# Supplementary graphs {#app:suppgraph}
+```
+
+The first line tells `bookdown` that the sections that follow are all to be treated as appendices. The next two lines will create two appendices (one titled "Source code" and the other titled "Supplementary graphs"). These appendices may be labelled and referenced as regular sections are (for example, "see Appendix `\ref{app:sourcecode}` for the source code used, and Appendix `\ref{app:suppgraph}` for supplementary graphs").
