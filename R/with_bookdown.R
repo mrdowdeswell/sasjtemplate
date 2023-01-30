@@ -1,3 +1,8 @@
+#' Knit using bookdown
+#' 
+#' @param keep_tex Keep the raw .tex file?
+#'
+#' @import bookdown
 #' @export
 with_bookdown = function(keep_tex = TRUE) {
   # locations of resource files in the package
@@ -8,7 +13,7 @@ with_bookdown = function(keep_tex = TRUE) {
   template = pkg_resource("rmarkdown/templates/sasj-with-bookdown/resources/SASJ-Rmd-Template.tex")
   #header = pkg_resource("reports/quarterly/header.html")
 
-  # call the base html_document function
+  # call the base bookdown::pdf_document2 function
   bookdown::pdf_document2(
     template = template,
     #fig_width = 6.5, fig_height = 4,
