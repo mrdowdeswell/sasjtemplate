@@ -280,7 +280,7 @@ Be aware of the initial (two space) indentation of certain elements in the YAML 
 
 ## The top-level `output` format used in the `.Rmd` file
 
-The default `output` format in the YAML frontmatter of this template is `sasjtemplate::with_bookdown`.
+The default `output` format in the YAML frontmatter of the `.Rmd` template is `sasjtemplate::with_bookdown`.
 
 ```
 output:
@@ -288,15 +288,15 @@ output:
     keep_tex: true
 ```
 
-This makes use of the additional citing and referencing functionality in the `bookdown` package^[The `bookdown` package, and its dependencies, are installed when the `sasjtemplate` package is installed.] [@yihui2016].
-
-The `bookdown` package allows some finer control over certain features, as indicated in subsequent sections.
+This makes use of the additional citing and referencing functionality in the `bookdown` package^[The `bookdown` package, and its dependencies, are installed when the `sasjtemplate` package is installed.] [@yihui2016]. The `bookdown` package allows some finer control over certain features, as indicated in subsequent sections.
 
 ## Typesetting and referencing mathematical expressions {#subsec:mathexpress}
 
 Mathematical expressions may be entered exactly as described in Section \ref{sec:math}. Numbered, labelled equations may be referenced using (`\ref{eqn:Poisson1}`). So, for example: "the probability mass function of a Poisson variable is provided in (\ref{eqn:Poisson1})". Note that the SASJ guidelines indicate that "it is preferable not to use the word 'Equation' with the equation number when referencing" [@SASJauthorguidelines].
 
-Alternatively, you may reference equations (and sections, subsections, tables, figures, etc.)\ using the syntax `\@ref(eqn:Poisson1)` instead of (`\ref{eqn:Poisson1}`), the latter being essentially raw \LaTeX. As mentioned before, this is a matter of preference.
+Alternatively, you may reference equations (and sections, subsections, tables, figures, etc.)\ using the syntax `\@ref(eqn:Poisson1)` instead of (`\ref{eqn:Poisson1}`), the latter being essentially raw \LaTeX.
+
+Which approach to use is solely a matter of preference and may depend on your background and familiarity with \LaTeX.
 
 ## Enumerated and itemised lists
 
@@ -316,30 +316,30 @@ Here is an example of a nested itemised list in R markdown.
 
 ## Theorems, propositions, etc. {#subsec:thmsprops}
 
-### Using vanilla \LaTeX
-
-You may write your theorems, propositions, etc.\ as in Section \ref{sec:thms} (using regular \LaTeX), and use the referencing syntax described in Subsection \ref{subsec:mathexpress}.
-
 ### Using the `sasjtemplate::with_bookdown` output format functionality
 
-The `sasjtemplate` exposes functionality from the `bookdown` package. It is therefore also possible to use the following markdown syntax to provide a theorem (and a label for it, `#thmlabel`, to use for referencing).
+The `sasjtemplate` exposes functionality provided by the `bookdown` package. It is therefore possible to use the following markdown syntax to provide a theorem (and a label for it, `#thmlabel`, to use for referencing).
 
     ::: {.theorem #thmlabel}
-    The advantage of this `bookdown` theorem environment syntax is that it may contain 
-    **any** _Markdown_ syntax^[Even footnotes!].
+    The advantage of using this `bookdown` theorem environment syntax is that it may 
+    **contain** any _Markdown_ syntax^[Even footnotes!].
     :::
 
 ```{r show-theorem-if-bookdown-being-used, results = 'asis', include = FALSE}
 if ("sasjtemplate::with_bookdown" == rmarkdown::all_output_formats(knitr::current_input())) {
-cat('::: {.theorem #thmlabel}', 'The advantage of this `bookdown` theorem environment syntax is that it may contain **any** _Markdown_ syntax^[Even footnotes!].', ':::', sep = '\n')
+cat('::: {.theorem #thmlabel}', 'The advantage of using this `bookdown` theorem environment syntax is that it may **contain** any _Markdown_ syntax^[Even footnotes!].', ':::', sep = '\n')
 }
 ```
 
 ::: {.theorem #thmlabel}
-The advantage of this `bookdown` theorem environment syntax is that it may contain **any** _Markdown_ syntax^[Even footnotes!].
+The advantage of using this `bookdown` theorem environment syntax is that it may **contain** any _Markdown_ syntax^[Even footnotes!].
 :::
 
 This generates a theorem environment which may be referenced using `\@ref(thm:thmlabel)`. Similar syntax may be used to create labelled and referenceable proof (`.proof`), proposition (`.proposition`), corollary (`.corollary`), lemma (`.lemma`), definition (`.definition`), and remark (`.remark`) environments. See @yihui2016 (and [markdown extensions by `bookdown`](https://bookdown.org/yihui/bookdown/markdown-extensions-by-bookdown.html#theorems), in particular) for further details.
+
+### Using vanilla \LaTeX
+
+If you choose, you may still write your theorems, propositions, etc.\ as in Section \ref{sec:thms} (using regular \LaTeX), and use the referencing syntax described in Subsection \ref{subsec:mathexpress}.
 
 ## Tables and figures
 

@@ -38,7 +38,7 @@ and provide a directory to create the folder in.
 
 The resulting .Rmd file may be knitted immediately to produce a sample
 .pdf file, which itself contains further instruction on how to use the
-SASJ `.Rmd` template. The first seven sections of the file are identical
+SASJ .Rmd template. The first seven sections of the file are identical
 to the file produced from the SASJ .tex template. The eighth section
 provides further supporting information on using the R markdown version
 and functionality.
@@ -49,6 +49,6 @@ order to write your own paper. All the best!
 
 ## Troubleshooting
 
-Knitting any document to `.pdf` requires a functioning
+Knitting any document to .pdf requires a functioning $\LaTeX$
 installation—[`tinytex` R package](https://yihui.org/tinytex/) is a
-recommended, lightweight, installation.
+recommended, lightweight, $\LaTeX$ installation.
