@@ -43,4 +43,4 @@ Of course, for your purposes, you will need to edit the YAML (explanatory commen
 
 ## Troubleshooting
 
-Knitting any document to .pdf requires a functioning \(\LaTeX\) installation---[`tinytex` R package](https://yihui.org/tinytex/) is a recommended, lightweight, \(\LaTeX\) installation.
+Knitting any document to .pdf requires a functioning \(\LaTeX\) installation---[`tinytex` R package](https://yihui.org/tinytex/) is a recommended, lightweight, \(\LaTeX\) installation if you do not already have one^[Note that `bookdown` installs `tinytex` as a dependency.]. Note that it is not sufficient to just have `tinytex` installed as a package, it also needs some local setup which is achieved by running `tinytex::install_tinytex()` in RStudio/R.

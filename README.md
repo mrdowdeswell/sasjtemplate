@@ -51,4 +51,9 @@ order to write your own paper. All the best!
 
 Knitting any document to .pdf requires a functioning $\LaTeX$
 installation—[`tinytex` R package](https://yihui.org/tinytex/) is a
-recommended, lightweight, $\LaTeX$ installation.
+recommended, lightweight, $\LaTeX$ installation if you do not already
+have one[^1]. Note that it is not sufficient to just have `tinytex`
+installed as a package, it also needs some local setup which is achieved
+by running `tinytex::install_tinytex()` in RStudio/R.
+
+[^1]: Note that `bookdown` installs `tinytex` as a dependency.
