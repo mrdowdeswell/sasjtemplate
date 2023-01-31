@@ -13,7 +13,7 @@ in the style required by the South African Statistical Journal.
 
 You can install the development version of
 [`sasjtemplate`](https://github.com/mrdowdeswell/sasjtemplate) from
-[GitHub](https://github.com/) with:
+[GitHub](https://github.com/) using:
 
 ``` r
 # install.packages("devtools")
@@ -37,11 +37,11 @@ of the available `sasjtemplate` options, provide a name for your file
 and provide a directory to create the folder in.
 
 The resulting .Rmd file may be knitted immediately to produce a sample
-.pdf file, which itself contains further instruction on how to use the
+.pdf file, which itself contains further instructions on how to use the
 SASJ .Rmd template. The first seven sections of the file are identical
 to the file produced from the SASJ .tex template. The eighth section
-provides further supporting information on using the R markdown version
-and functionality.
+provides further supporting information on using the R markdown template
+version and functionality.
 
 Of course, for your purposes, you will need to edit the YAML
 (explanatory comments are provided) and contents of the .Rmd file in
