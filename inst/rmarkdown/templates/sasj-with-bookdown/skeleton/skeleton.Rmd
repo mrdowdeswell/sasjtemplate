@@ -260,15 +260,17 @@ Sections \ref{sec:intro}--\ref{sec:citing} are precisely the sections^[Except fo
 
 If you have read through the `Rmd for SASJ.Rmd` file, you will have noticed that it contains primarily plain \LaTeX\ in Sections\ \ref{sec:intro}--\ref{sec:citing} (the `.Rmd` format permits this, thanks to Pandoc). Of course, one of the advantages of using R markdown is the ability to intermingle writing with analysis, results, output and graphics---all in a dynamic way. While writing raw \LaTeX\ may occasionally be unavoidable in order to achieve certain aims, much of what is achieved by the raw \LaTeX\ in Sections\ \ref{sec:intro}--\ref{sec:citing} is also achievable via regular (perhaps easier) R markdown syntax. For example, all the section headings are already implemented using R markdown syntax.
 
-We proceed to recast some of the earlier \LaTeX-produced sections using R markdown syntax. In principle, it is possible to write a complete SASJ-submission-ready document entirely within R markdown (using this template) without ever touching a \LaTeX\ compiler directly^[Of course, behind the `rmarkdown` and `knitr` scenes, Pandoc is calling a \LaTeX\ compiler on your behalf. To this end, it is recommended that you install the `tinytex` R package, a lightweight \LaTeX\ distribution.]. 
+We proceed to recast some of the earlier \LaTeX-produced sections using R markdown syntax. In principle, it is possible to write a complete SASJ-submission-ready document entirely within R markdown (using this template) without ever touching a \LaTeX\ compiler directly^[Of course, behind the `rmarkdown` and `knitr` scenes, Pandoc is calling a \LaTeX\ compiler on your behalf. To this end, it is recommended that you install the [`tinytex` R package](https://yihui.org/tinytex/), a lightweight \LaTeX\ distribution.]. 
+
+## Template installation {#subsec:templateinstallation}
+
+The templates for creating a SASJ `.Rmd` file are exposed by installing the `sasjtemplate` package^[See https://github.com/mrdowdeswell/sasjtemplate and the instructions there.]. After installation, these templates appear in the "New R Markdown" dialog box, which may be accessed in RStudio through _File_ > _New File_ > _R Markdown..._, and then selecting "From Template" in the left pane. After providing a name^[This will be both the name of a directory/folder that will be created in a location to be specified, as well as the name of your new `.Rmd` file.], and indicating a location^[This is the directory/folder where the new template folder will be created.], RStudio will create a new folder in the specified location that will hold four files: your newly created `.Rmd` file, `SASJ.sty`, `sasj.bst`, and `references.bib`.
 
 ## Template file structure {#subsec:filestructure}
 
-Before starting with the details of the template files themselves, you should be aware that your `.Rmd` file (well, Pandoc, really) will need to be able to locate four files used in the creation of the SASJ article: `SASJ_Rmd_Template.tex`, `SASJ.sty`, `sasj.bst`, `references.bib`. The first of these is the Pandoc template that is used to render the article. The last three files are the original files provided as part of the SASJ TeX template [see, for example, @SASJtextemplate]. Of the four, the only one you would need to edit or replace is `references.bib` (with your own references relevant to your article).
+In order to compile to `.pdf`, your `.Rmd` file (well, Pandoc, really) will need supporting files used in the creation of the SASJ article: `SASJ.sty`, `sasj.bst`, and `references.bib`. These three files are the original files provided as part of the SASJ TeX template [see, for example, @SASJtextemplate]. Of these, the only one you would need to edit or replace is `references.bib` (with your own references relevant to your article).
 
-If your `.Rmd` document (your edited version of a copy of the `Rmd for SASJ.Rmd` template) is in the same folder as these files, then you should have no problem compiling to `.pdf` (you should try it). (You should rename the `Rmd for SASJ.Rmd` file before using it---for example, `Inference article for SASJ.Rmd`.)
-
-Alternatively, it is possible to install the R markdown template for SASJ into your version of R Studio so that it is one of the available templates when clicking through the menu items `File > New File > R Markdown...`, and then navigate to `From Template` in the left pane.
+For example, if you provided the name "Inference article for SASJ" in the "New R Markdown" dialog box above, RStudio will create a folder called "Inference article for SASJ" that contains `Inference article for SASJ.Rmd`, `SASJ.sty`, `sasj.bst`, and `references.bib`. You should be able to immediately knit this `.Rmd` file!^[This presupposes that your RStudio installation already has knowledge of a \LaTeX installation---[`tinytex` R package](https://yihui.org/tinytex/) is a recommended, lightweight, \LaTeX installation.] 
 
 ## YAML frontmatter
 
@@ -278,27 +280,23 @@ Be aware of the initial (two space) indentation of certain elements in the YAML 
 
 ## The top-level `output` format used in the `.Rmd` file
 
-The default `output` format in the YAML frontmatter of this template is `pdf_document`.
+The default `output` format in the YAML frontmatter of this template is `sasjtemplate::with_bookdown`.
 
 ```
 output:
-  pdf_document:
+  sasjtemplate::with_bookdown:
+    keep_tex: true
 ```
 
-Alternatively, for users familiar with the `bookdown` package^[Even if you are not familiar with it, it is easy to install via `install.packages("bookdown")` in R.] [@yihui2016], it is also possible to use `bookdown::pdf_document2` as the `output` format.
+This makes use of the additional citing and referencing functionality in the `bookdown` package^[The `bookdown` package, and its dependencies, are installed when the `sasjtemplate` package is installed.] [@yihui2016].
 
-```
-output:
-  bookdown::pdf_document2:
-```
-
-Which `output` format to use is not a huge decision. It is largely a matter of familiarity. The `bookdown` package allows some finer control over certain features, as indicated in subsequent sections.
+The `bookdown` package allows some finer control over certain features, as indicated in subsequent sections.
 
 ## Typesetting and referencing mathematical expressions {#subsec:mathexpress}
 
 Mathematical expressions may be entered exactly as described in Section \ref{sec:math}. Numbered, labelled equations may be referenced using (`\ref{eqn:Poisson1}`). So, for example: "the probability mass function of a Poisson variable is provided in (\ref{eqn:Poisson1})". Note that the SASJ guidelines indicate that "it is preferable not to use the word 'Equation' with the equation number when referencing" [@SASJauthorguidelines].
 
-If you choose to use `bookdown::pdf_document2` as your `output` format, then you may alternatively reference equations (and sections, subsections, tables, figures, etc.)\ using the syntax `\@ref(eqn:Poisson1)` instead of (`\ref{eqn:Poisson1}`), the latter being essentially raw \LaTeX. As mentioned before, this is a matter of preference.
+Alternatively, you may reference equations (and sections, subsections, tables, figures, etc.)\ using the syntax `\@ref(eqn:Poisson1)` instead of (`\ref{eqn:Poisson1}`), the latter being essentially raw \LaTeX. As mentioned before, this is a matter of preference.
 
 ## Enumerated and itemised lists
 
@@ -318,24 +316,28 @@ Here is an example of a nested itemised list in R markdown.
 
 ## Theorems, propositions, etc. {#subsec:thmsprops}
 
-### Using vanilla `pdf_document` output format
+### Using vanilla \LaTeX
 
-If you use the `pdf_document` output format, then you may write your theorems, propositions, etc.\ as in Section \ref{sec:thms} (using regular \LaTeX), and use the referencing syntax described in Subsection \ref{subsec:mathexpress}.
+You may write your theorems, propositions, etc.\ as in Section \ref{sec:thms} (using regular \LaTeX), and use the referencing syntax described in Subsection \ref{subsec:mathexpress}.
 
-### Using the `bookdown` package and `bookdown::pdf_document2` output format
+### Using the `sasjtemplate::with_bookdown` output format functionality
 
-If you choose to optionally use the `bookdown::pdf_document2` output format, then it is also possible to use the following markdown syntax to provide a theorem (and a label for it, `#thmlabel`, to use for referencing).
+The `sasjtemplate` exposes functionality from the `bookdown` package. It is therefore also possible to use the following markdown syntax to provide a theorem (and a label for it, `#thmlabel`, to use for referencing).
 
     ::: {.theorem #thmlabel}
     The advantage of this `bookdown` theorem environment syntax is that it may contain 
     **any** _Markdown_ syntax^[Even footnotes!].
     :::
 
-```{r show-theorem-if-bookdown-being-used, results = 'asis'}
+```{r show-theorem-if-bookdown-being-used, results = 'asis', include = FALSE}
 if ("sasjtemplate::with_bookdown" == rmarkdown::all_output_formats(knitr::current_input())) {
 cat('::: {.theorem #thmlabel}', 'The advantage of this `bookdown` theorem environment syntax is that it may contain **any** _Markdown_ syntax^[Even footnotes!].', ':::', sep = '\n')
 }
 ```
+
+::: {.theorem #thmlabel}
+The advantage of this `bookdown` theorem environment syntax is that it may contain **any** _Markdown_ syntax^[Even footnotes!].
+:::
 
 This generates a theorem environment which may be referenced using `\@ref(thm:thmlabel)`. Similar syntax may be used to create labelled and referenceable proof (`.proof`), proposition (`.proposition`), corollary (`.corollary`), lemma (`.lemma`), definition (`.definition`), and remark (`.remark`) environments. See @yihui2016 (and [markdown extensions by `bookdown`](https://bookdown.org/yihui/bookdown/markdown-extensions-by-bookdown.html#theorems), in particular) for further details.
 
@@ -360,29 +362,29 @@ The [SASJ guidelines for authors](https://www.journals.ac.za/index.php/sasj/libr
 ```{r equiv-Rmd-citing}
 cite.table <- data.frame(
   syntax = c('\\verb![@...]!', '', '', '', '', '\\verb!@...!', '', ''),
-  rmd = c('\\verb![@fisher1939]!', '\\verb![@fisher1939; @hall1988]!', '\\verb![@hall1988, p.\ 931]!', '\\verb![see, for example, @fisher1939]!', '\\verb![see, @hall1988, p.\ 931]!', '\\verb!@fisher1939!', '\\verb!@fisher1939; @hall1988!', '\\verb!@fisher1939 [p.\ 13]!'),
+  rmd    = c('\\verb![@fisher1939]!', '\\verb![@fisher1939; @hall1988]!', '\\verb![@hall1988, p.\ 931]!', '\\verb![see, for example, @fisher1939]!', '\\verb![see, @hall1988, p.\ 931]!', '\\verb!@fisher1939!', '\\verb!@fisher1939; @hall1988!', '\\verb!@fisher1939 [p.\ 13]!'),
   result = c('\\citep{fisher1939}', '\\citep{fisher1939,hall1988}', '\\citep[p.~931]{hall1988}', '\\citep[see, for example,][]{fisher1939}', '\\citep[see][p.~931]{hall1988}', '\\citet{fisher1939}', '\\citet{fisher1939,hall1988}', '\\citet[p.~13]{fisher1939}'))
 ```
 
 ```{r Rmdciting}
 knitr::kable(cite.table, 
-  format = 'latex', 
-  toprule = '\\toprule',
-  midrule = '\\midrule',
+  format     = 'latex', 
+  toprule    = '\\toprule',
+  midrule    = '\\midrule',
   bottomrule = '\\bottomrule',
-  position = 'tb',
-  align = 'cll',
-  col.names = c('Syntax', 'R markdown example', 'Result in text'),
-  caption = 'Using R markdown for citing references.',
-  linesep = '',
-  vline = '',
-  escape = FALSE
+  position   = 'tb',
+  align      = 'cll',
+  col.names  = c('Syntax', 'R markdown example', 'Result in text'),
+  caption    = 'Using R markdown for citing references.',
+  linesep    = '',
+  vline      = '',
+  escape     = FALSE
   )
 ```
 
 ## Adding appendices
 
-The SASJ guidelines don't address appendices at all. If, however, you wish to try your luck, you will _have_ to use `bookdown::pdf_document2` as the `output` format for the `.Rmd` file. Then, add appendices using:
+The SASJ template doesn't include appendices but the SASJ author guidelines [@SASJauthorguidelines] do mention their use. Appendices may be added using:
 
 ```
 # (APPENDIX) Appendix {-}
